@@ -17,13 +17,9 @@ public class SpawnTileScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        /* if (StartTime == null)
-             StartTime = 1;
-         if (DifTime == null)
-             DifTime = 0.5f;*/
         scale = new Vector3(( 16.2f / AmountOfTiles),.5f,4);
         timer = StartTime;
-        SpawnOdds = 1;
+        SpawnOdds = .6f;
         camWidth = Camera.main.orthographicSize * 2.0f * Camera.main.aspect;
     }
 
@@ -32,12 +28,45 @@ public class SpawnTileScript : MonoBehaviour
     {
         if(spawnTimer())
         {
-            SpawnTile(AmountOfTiles);
+            SpawnTileBetter(AmountOfTiles);
         }
-      //  print("time of timer: " + timer);
     }
 
-    #region SpawnTiles
+    Vector3 posOfTile(int positionX)
+    {
+
+        if (positionX == -1)
+        {
+            return new Vector3(100, -10, -100);
+        }
+
+        float x = transform.position.x + ((positionX - .5f) * scale.x * 1.1f);
+        return new Vector3(x, transform.position.y, 2);
+    }
+
+    void SpawnTileBetter(int amountOfTiles)
+    {
+        amountOfTiles += 1;
+        int R = Random.Range(1, amountOfTiles);
+
+        int[] arrayPos = new int[amountOfTiles];
+        for (int i = 0; i < R; i++)
+        {
+            arrayPos[i] = Random.Range(1, amountOfTiles);
+            for (int j = 0; j < i; j++)
+            {
+                if (arrayPos[i] == arrayPos[j])
+                {
+                    arrayPos[i] = -1;
+                }
+            }
+            GameObject g = Instantiate(Tile, posOfTile(arrayPos[i]), Quaternion.identity);
+            g.transform.localScale = scale;
+        }
+
+    }
+
+    #region OldSpawnTiles
 
     void SpawnTile(int amount)
     {
@@ -47,7 +76,7 @@ public class SpawnTileScript : MonoBehaviour
         {
             if (oddsOfSpawning())
             {
-               GameObject g = Instantiate(Tile, posOfTile(spawnAmount,Tile), Quaternion.identity);
+               GameObject g = Instantiate(Tile, posOfTile(spawnAmount), Quaternion.identity);
                 g.transform.localScale = scale;
                 spawnAmount--;
             }
@@ -58,23 +87,12 @@ public class SpawnTileScript : MonoBehaviour
 
     }
 
-    Vector3 posOfTile(int positionX, GameObject tile)
-    {
-        
-        float x = transform.position.x + ((positionX - .5f)  * scale.x * 1.1f);
-        print("X: " + x);
-        return new Vector3(x, transform.position.y, 2);
-    }
+    
 
 
     bool oddsOfSpawning()
     {
-        if (SpawnOdds == 1)
-        {
-            SpawnOdds = SpawnOdds * 0.6f;
-            return true;
-        }
-        else if(SpawnOdds >= Random.value)
+        if(SpawnOdds >= Random.value)
         {
             return true;
         }
@@ -84,6 +102,8 @@ public class SpawnTileScript : MonoBehaviour
         }
         
     }
+
+
     #endregion
 
     bool spawnTimer()
