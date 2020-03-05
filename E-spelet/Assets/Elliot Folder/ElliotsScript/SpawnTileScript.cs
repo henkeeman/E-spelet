@@ -21,7 +21,7 @@ public class SpawnTileScript : MonoBehaviour
              StartTime = 1;
          if (DifTime == null)
              DifTime = 0.5f;*/
-        scale = new Vector3(( 16.2f / AmountOfTiles),.5f,2);
+        scale = new Vector3(( 16.2f / AmountOfTiles),.5f,4);
         timer = StartTime;
         SpawnOdds = 1;
         camWidth = Camera.main.orthographicSize * 2.0f * Camera.main.aspect;
@@ -63,7 +63,7 @@ public class SpawnTileScript : MonoBehaviour
         
         float x = transform.position.x + ((positionX - .5f)  * scale.x * 1.1f);
         print("X: " + x);
-        return new Vector3(x, transform.position.y, 0);
+        return new Vector3(x, transform.position.y, 2);
     }
 
 
