@@ -36,13 +36,16 @@ public class TIleScript : MonoBehaviour
         if(SpawnValue < OddsOfSpawnigClock)
         {
             OddsOfSpawnigClock = 0;
-
-            Instantiate(ClockPrefab,transform.position,Quaternion.identity);
+            Vector3 postemp;
+            postemp = new Vector3(transform.position.x, transform.position.y + (transform.localScale.y + .5f), transform.position.z);
+            Instantiate(ClockPrefab,postemp,Quaternion.identity);
         }
         else
         {
-            if(SpawnTileScript.WhatRowLookingFor < DividerMaxLimit)
-            OddsOfSpawnigClock += (Time.deltaTime / Mathf.Sqrt(SpawnTileScript.WhatRowLookingFor));
+            if (SpawnTileScript.WhatRowLookingFor < DividerMaxLimit)
+                OddsOfSpawnigClock += (Time.deltaTime / Mathf.Sqrt(SpawnTileScript.WhatRowLookingFor));
+            else
+                OddsOfSpawnigClock += Time.deltaTime;
         }
         return false;
     }
