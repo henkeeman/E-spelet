@@ -614,9 +614,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Tile: {fileID: 247106220721336803, guid: dd0c82138c89b6a45b046569278dfbda, type: 3}
-  AmountOfTiles: 12
+  AmountOfTiles: 6
   StartTime: 1
   DifTime: 1
+  DistanceBetweenSpawns: 10
 --- !u!4 &526422958
 Transform:
   m_ObjectHideFlags: 0
@@ -5469,7 +5470,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be76e5f14cfee674cb30b491fb72b09b, type: 3}
   m_Name: 
