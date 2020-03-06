@@ -37,6 +37,6 @@ public class BackgroundMoveScript : MonoBehaviour
 
 
        // print("pos y: " + transform.position.y);
-        print("pos: " + (startpos - lenght));
+        //print("pos: " + (startpos - lenght));
     }
 }

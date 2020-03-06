@@ -7,12 +7,11 @@ public class SpawnTileScript : MonoBehaviour
 {
    
     Vector3 Startpos;
-    float SpawnOdds;
     float camWidth;
-    float timer; // in sec
+  //  float timer; // in sec
 
-    public float StartTime;
-    public float DifTime; // how much the time should change for the spawning
+  //  public float StartTime;
+  //  public float DifTime; // how much the time should change for the spawning
     public float DistanceBetweenSpawns;
     public GameObject Tile;
     public int AmountOfTiles;
@@ -26,8 +25,7 @@ public class SpawnTileScript : MonoBehaviour
     {
         whatRow = 0;
         scale = new Vector3(( 16.2f / AmountOfTiles),.5f,4);
-        timer = StartTime;
-        SpawnOdds = .6f;
+      //  timer = StartTime;
         camWidth = Camera.main.orthographicSize * 2.0f * Camera.main.aspect;
         WhatRowLookingFor = 0;
     }
@@ -91,7 +89,8 @@ public class SpawnTileScript : MonoBehaviour
         GameObject temp;
         temp = GameObject.Find(WhatRowLookingFor + ":" + "0");
         float y;
-        y = (float)Math.Sqrt((transform.position.y * transform.position.y) - (temp.transform.position.y * temp.transform.position.y));
+        y = transform.position.y - temp.transform.position.y;
+        print("y: " + y);
         if (y > DistanceBetweenSpawns)
         {
             WhatRowLookingFor++;

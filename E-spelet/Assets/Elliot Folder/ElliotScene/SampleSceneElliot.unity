@@ -613,11 +613,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687c208902fe604459e587587bdd6840, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tile: {fileID: 247106220721336803, guid: dd0c82138c89b6a45b046569278dfbda, type: 3}
-  AmountOfTiles: 6
   StartTime: 1
   DifTime: 1
-  DistanceBetweenSpawns: 10
+  DistanceBetweenSpawns: 4
+  Tile: {fileID: 247106220721336803, guid: dd0c82138c89b6a45b046569278dfbda, type: 3}
+  AmountOfTiles: 6
 --- !u!4 &526422958
 Transform:
   m_ObjectHideFlags: 0
