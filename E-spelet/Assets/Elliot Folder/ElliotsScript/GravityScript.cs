@@ -7,12 +7,13 @@ public class GravityScript : MonoBehaviour
     public float Mass;
     public float PullForse;
 
+
     // Update is called once per frame
     void Update()
     {
         if (transform.position.y < -7)
             Destroy(gameObject);
-        Gravity();
+         Gravity();
     }
 
     void Gravity()

@@ -5,14 +5,21 @@ using UnityEngine;
 public class TIleScript : MonoBehaviour
 {
     public GameObject ClockPrefab;
-    public static float OddsOfSpawnigClock;
-    public float DividerMaxLimit;
-    public float SpawnValue;
+
+    public float SpawnValueOfClocks;
+    public float DividerMaxLimitOfClock;
+
+    static float OddsOfSpawnigClock;
+    static float DividerMaxLimit;
+    static float SpawnValue;
     public float PullForse;
     public float Mass;
     // Start is called before the first frame update
     void Start()
     {
+        SpawnValue = (SpawnValueOfClocks + 1);
+        DividerMaxLimit = DividerMaxLimitOfClock ;
+       // OddsOfSpawnigClock = 1;
         oddsOfSpawningClock();        
     }
 
@@ -31,11 +38,11 @@ public class TIleScript : MonoBehaviour
         //PullForse = PullForse * 1.1f; Kändes wierd
     }
 
-    bool oddsOfSpawningClock()
+    void oddsOfSpawningClock()
     {
         if(SpawnValue < OddsOfSpawnigClock)
         {
-            OddsOfSpawnigClock = 0;
+            OddsOfSpawnigClock = 1;
             Vector3 postemp;
             postemp = new Vector3(transform.position.x, transform.position.y + (transform.localScale.y + .5f), transform.position.z);
             Instantiate(ClockPrefab,postemp,Quaternion.identity);
@@ -43,10 +50,12 @@ public class TIleScript : MonoBehaviour
         else
         {
             if (SpawnTileScript.WhatRowLookingFor < DividerMaxLimit)
-                OddsOfSpawnigClock += (Time.deltaTime / Mathf.Sqrt(SpawnTileScript.WhatRowLookingFor));
+                OddsOfSpawnigClock += (1 / Mathf.Sqrt(SpawnTileScript.WhatRowLookingFor) * Time.deltaTime);
             else
-                OddsOfSpawnigClock += Time.deltaTime;
+                OddsOfSpawnigClock += (1 / Time.deltaTime * Mathf.Sqrt(DividerMaxLimit));
         }
-        return false;
+
+        print("odds of spawning clocks: " + OddsOfSpawnigClock);
+
     }
 }
