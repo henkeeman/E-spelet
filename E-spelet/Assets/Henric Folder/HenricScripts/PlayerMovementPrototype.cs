@@ -22,6 +22,16 @@ public class PlayerMovementPrototype : MonoBehaviour
     Vector3 MovementForce;
     [SerializeField]
     bool Jumping;
+    [SerializeField]
+    LayerMask playerLayerMask;
+
+    [SerializeField]
+    Transform GroundCheckTrans;
+    [SerializeField]
+    float CheckRadius;
+
+    public bool Grounded;
+    
 
 
     private void Awake()
@@ -44,6 +54,7 @@ public class PlayerMovementPrototype : MonoBehaviour
 
     private void FixedUpdate()
     {
+        GroundCheck();
         Move();
         Jump();
     }
@@ -59,13 +70,23 @@ public class PlayerMovementPrototype : MonoBehaviour
 
 
         //float v = MovementInput.y;
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space)&& Grounded)
         {
             Jumping = true;
             print("FUCK");
         }
 
         MovementForce = new Vector3(hlerp,0,0);
+    }
+    void GroundCheck()
+    {
+
+        if (Physics.CheckSphere(GroundCheckTrans.position, CheckRadius, playerLayerMask))
+        {
+            Grounded = true;
+        }
+        else Grounded = false;
+
     }
     private void Move()
     {
