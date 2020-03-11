@@ -8,7 +8,7 @@ public class PlayerMovementPrototype : MonoBehaviour
 
    
     //Spelarens Rigidbody
-    Rigidbody Rigidbody;
+    Rigidbody RB;
     //InputActions
     PlayerInput InputAction;
     //LeftStickVectorMovement Vart man hämtar movement ifrån.
@@ -18,18 +18,28 @@ public class PlayerMovementPrototype : MonoBehaviour
     public float MvSpeed;
     //JumpForce
     public float JumpForce;
-    //The input saved for FixedUpdate
-    Vector3 MovementForce;
+    //Ifall man hoppar eller inte
     [SerializeField]
     bool Jumping;
+    //The input saved for FixedUpdate
+
+    Vector3 MovementForce;
+
+    //Hastigheten på karaktärern
+    [SerializeField]
+    float MaxSpeed;
+
+    //Grounded check (Alla variabler ) 
+    //Kollar vilka layers som räknas som mark
     [SerializeField]
     LayerMask playerLayerMask;
-
+    //Ursprungspositionen ifrån vart man kollar vad som är ground
     [SerializeField]
     Transform GroundCheckTrans;
+    //Ground Checkens radius Ifall man t.ex höjer värdet så kan gubben hoppa ifall en är långt ifrån marken
     [SerializeField]
     float CheckRadius;
-
+    //Ifall man är på marken eller inte
     public bool Grounded;
     
 
@@ -41,7 +51,7 @@ public class PlayerMovementPrototype : MonoBehaviour
     }
     void Start()
     {
-        Rigidbody = GetComponent<Rigidbody>();
+        RB = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -70,7 +80,7 @@ public class PlayerMovementPrototype : MonoBehaviour
 
 
         //float v = MovementInput.y;
-        if (Input.GetKeyDown(KeyCode.Space)&& Grounded)
+        if (Input.GetKeyDown(KeyCode.Space) && Grounded)
         {
             Jumping = true;
             print("FUCK");
@@ -90,16 +100,32 @@ public class PlayerMovementPrototype : MonoBehaviour
     }
     private void Move()
     {
-        Rigidbody.AddForce(MovementForce*MvSpeed);
+        
+        var h = MovementInput.x;
+        
+        var velocity = RB.velocity;
+        var percent = velocity.magnitude / MaxSpeed;
+        if (velocity.magnitude >= MaxSpeed)
+        {
+            
+        }
+        MovementForce = new Vector3(h, 0, 0)*MvSpeed*(1+percent);
+        RB.AddForce(Vector3.down * Time.deltaTime * 100);
+        RB.AddForce(MovementForce*MvSpeed,ForceMode.Impulse);
+        if (velocity.magnitude>=MaxSpeed)
+        {
+            RB.velocity = Vector3.ClampMagnitude(RB.velocity, MaxSpeed);
+        }
         //Rigidbody.AddForce(-MovementForce * MvSpeed / 2);
         //Rigidbody.velocity = MovementForce;
 
     }
+    
     private void Jump()
     {
         if (Jumping == true)
         {
-            Rigidbody.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
+            RB.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
             Jumping = false;
         }
 
