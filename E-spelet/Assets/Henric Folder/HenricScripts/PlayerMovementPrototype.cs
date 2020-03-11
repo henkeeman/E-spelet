@@ -38,11 +38,7 @@ public class PlayerMovementPrototype : MonoBehaviour
     void Update()
     {
         ReadInput();
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Jumping = true;
-            print("FUCK");
-        }
+
 
     }
 
@@ -63,20 +59,26 @@ public class PlayerMovementPrototype : MonoBehaviour
 
 
         //float v = MovementInput.y;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Jumping = true;
+            print("FUCK");
+        }
 
-        MovementForce = new Vector3(-hlerp * MvSpeed, Rigidbody.velocity.y, Rigidbody.velocity.z);
+        MovementForce = new Vector3(hlerp,0,0);
     }
     private void Move()
     {
-
-        Rigidbody.velocity = MovementForce;
+        Rigidbody.AddForce(MovementForce*MvSpeed,ForceMode.Impulse);
+        //Rigidbody.AddForce(-MovementForce * MvSpeed / 2);
+        //Rigidbody.velocity = MovementForce;
 
     }
     private void Jump()
     {
         if (Jumping == true)
         {
-            Rigidbody.AddForce(Vector3.up * JumpForce);
+            Rigidbody.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
             Jumping = false;
         }
 
