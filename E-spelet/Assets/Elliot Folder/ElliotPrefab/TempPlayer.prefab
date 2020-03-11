@@ -130,7 +130,8 @@ MonoBehaviour:
   StartTime: 2
   ScoreText: {fileID: 6960122088971310127}
   Endgame: 0
-  AddedTimeOnCollitionWithClock: 0
+  AddedTimeOnCollitionWithClock: 20
+  SubstractedTimeOnCollitionWithLava: 20
 --- !u!114 &6960122087893081417
 MonoBehaviour:
   m_ObjectHideFlags: 0

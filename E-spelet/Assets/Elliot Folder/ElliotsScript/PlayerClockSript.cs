@@ -10,6 +10,7 @@ public class PlayerClockSript : MonoBehaviour
     public TextMeshPro ScoreText;//visulice the time on the screen
     public bool Endgame;//när alla spelare e död
     public float AddedTimeOnCollitionWithClock;
+    public float SubstractedTimeOnCollitionWithLava;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +27,10 @@ public class PlayerClockSript : MonoBehaviour
         {
             StartTime += AddedTimeOnCollitionWithClock;
             Destroy(other.gameObject);
+        }
+        if(other.tag == "Lava")
+        {
+            StartTime -= AddedTimeOnCollitionWithClock;
         }
     }
    
