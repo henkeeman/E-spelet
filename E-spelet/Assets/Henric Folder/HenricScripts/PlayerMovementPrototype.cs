@@ -69,7 +69,7 @@ public class PlayerMovementPrototype : MonoBehaviour
     }
     private void Move()
     {
-        Rigidbody.AddForce(MovementForce*MvSpeed,ForceMode.Impulse);
+        Rigidbody.AddForce(MovementForce*MvSpeed);
         //Rigidbody.AddForce(-MovementForce * MvSpeed / 2);
         //Rigidbody.velocity = MovementForce;
 
