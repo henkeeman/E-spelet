@@ -13,7 +13,7 @@ public class PlayerMovementPrototype : MonoBehaviour
     PlayerInput InputAction;
     //LeftStickVectorMovement Vart man hämtar movement ifrån.
     Vector2 MovementInput;
-
+    
     //Movement speed
     public float MvSpeed;
     //JumpForce
@@ -47,6 +47,10 @@ public class PlayerMovementPrototype : MonoBehaviour
     float RotDeadzone;
     [SerializeField]
     float Smooth;
+    [SerializeField]
+    Animator _animator;
+    //animation Bools Sätter dom
+    bool Walking;
 
     private void Awake()
     {
@@ -56,6 +60,7 @@ public class PlayerMovementPrototype : MonoBehaviour
     void Start()
     {
         RB = GetComponent<Rigidbody>();
+        _animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -81,6 +86,11 @@ public class PlayerMovementPrototype : MonoBehaviour
         
         if (Mathf.Abs(h) <= 0.2f)
             h = 0;
+        if (Mathf.Abs(h) >= 0.2f)
+        {
+            Walking = true;
+        }
+        else Walking = false;
         float hlerp = Mathf.Lerp(0, h, 1);
 
 
@@ -92,6 +102,7 @@ public class PlayerMovementPrototype : MonoBehaviour
         }
 
         MovementForce = new Vector3(hlerp,0,0);
+        AnimationValues();
     }
     void GroundCheck()
     {
@@ -154,6 +165,13 @@ public class PlayerMovementPrototype : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, newRotation, Smooth * Time.deltaTime);
 
         }
+
+
+    }
+    private void AnimationValues()
+    {
+        _animator.SetBool("Walking", Walking);
+
 
 
     }
