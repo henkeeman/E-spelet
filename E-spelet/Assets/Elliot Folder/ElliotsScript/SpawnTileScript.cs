@@ -48,7 +48,7 @@ public class SpawnTileScript : MonoBehaviour
         }
 
         float x = transform.position.x + ((positionX - .5f) * scale.x * 1.1f);
-        return new Vector3(x, transform.position.y, 2);
+        return new Vector3(x, transform.position.y, 0);
     }
 
     void SpawnTileBetter(int amountOfTiles)
@@ -90,7 +90,6 @@ public class SpawnTileScript : MonoBehaviour
         temp = GameObject.Find(WhatRowLookingFor + ":" + "0");
         float y;
         y = transform.position.y - temp.transform.position.y;
-        print("y: " + y);
         if (y > DistanceBetweenSpawns)
         {
             WhatRowLookingFor++;

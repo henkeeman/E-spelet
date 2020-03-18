@@ -5,7 +5,6 @@ using UnityEngine;
 public class BackgroundMoveScript : MonoBehaviour
 {
     private float lenght, startpos;
-    public GameObject cam;
     public GameObject PrefabTile;
     // Start is called before the first frame update
     void Start()
@@ -26,17 +25,9 @@ public class BackgroundMoveScript : MonoBehaviour
     {
         Gravity();
 
-        /*
-        float temp = (cam.transform.position.y * (1 - parallaxEffect));
-        float dist = (cam.transform.position.y * parallaxEffect);
-        transform.position = new Vector3(transform.position.x, startpos + dist, transform.position.z);*/
 
         if (transform.position.y < startpos - (lenght / 2))
             transform.position = new Vector3(transform.position.x, startpos, transform.position.z);
 
-
-
-       // print("pos y: " + transform.position.y);
-        //print("pos: " + (startpos - lenght));
     }
 }

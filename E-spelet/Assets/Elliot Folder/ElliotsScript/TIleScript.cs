@@ -28,7 +28,7 @@ public class TIleScript : MonoBehaviour
     {
         if (transform.position.y < -7)
             Destroy(gameObject);
-        Gravity();
+       // Gravity();
     }
 
     void Gravity()
@@ -37,6 +37,7 @@ public class TIleScript : MonoBehaviour
 
         //PullForse = PullForse * 1.1f; Kändes wierd
     }
+
 
     void oddsOfSpawningClock()
     {
@@ -55,7 +56,7 @@ public class TIleScript : MonoBehaviour
                 OddsOfSpawnigClock += (1 / Time.deltaTime * Mathf.Sqrt(DividerMaxLimit));
         }
 
-        print("odds of spawning clocks: " + OddsOfSpawnigClock);
+        //print("odds of spawning clocks: " + OddsOfSpawnigClock);
 
     }
 }

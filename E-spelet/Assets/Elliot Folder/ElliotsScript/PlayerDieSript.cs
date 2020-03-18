@@ -12,7 +12,7 @@ public class PlayerDieSript : MonoBehaviour
         {
             Instantiate(DeathEffeckt, transform.position, Quaternion.identity);
 
-            Destroy(this.gameObject,.2f);
+            Destroy(this.gameObject);
         }
     }
 }
