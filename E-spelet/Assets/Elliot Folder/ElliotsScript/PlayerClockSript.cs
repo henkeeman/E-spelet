@@ -11,6 +11,8 @@ public class PlayerClockSript : MonoBehaviour
     public bool Endgame;//när alla spelare e död
     public float AddedTimeOnCollitionWithClock;
     public float SubstractedTimeOnCollitionWithLava;
+    bool grow;//so the time can change it's size
+    float count;//a timer for the growth change
     // Start is called before the first frame update
     void Start()
     {
@@ -38,7 +40,15 @@ public class PlayerClockSript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        printMin();
+      
+        if (StartTime < 10)
+        {
+            printStressTime();
+        }
+        else
+        {
+            printMin();
+        }
     }
 
     void printMin()
@@ -54,11 +64,12 @@ public class PlayerClockSript : MonoBehaviour
 
         StartTime -= Time.deltaTime;
 
-        if (StartTime > 10)
-        {
-            ScoreText.fontSize = 4.5f;
-        }
-            
+         if (StartTime <= 10)
+      {
+        //  ScoreText.fontSize = 5f;
+      }
+      
+
         sec = StartTime.ToString().Split(',')[0]; // so the text can show the time
         timer = (sec);
 
@@ -68,6 +79,74 @@ public class PlayerClockSript : MonoBehaviour
         }
 
         ScoreText.text = timer;
+
+    }
+
+    void printStressTime()
+    {
+        string sec;
+        string timer;
+
+        if (StartTime < 0.6f)
+        {
+            Endgame = true;
+        }
+
+        bounse();
+
+        StartTime -= Time.deltaTime;
+
+
+
+     
+
+        sec = StartTime.ToString().Split(',')[0]; // so the text can show the time
+        timer = (sec);
+
+        if (Endgame)
+        {
+            timer = "GameOver";
+        }
+
+        ScoreText.text = timer;
+    }
+
+    void bounse()
+    {
+
+            if (ScoreText.fontSize > 7)
+            {
+                grow = false;
+            }
+
+
+            if (ScoreText.fontSize < 3)
+            {
+                grow = true;
+            }
+
+
+
+            if (grow)
+            {
+                count += Time.deltaTime ;
+                if (count > .1)
+                {
+                ScoreText.fontSize += 3 / Mathf.Sqrt(StartTime);
+                    count = 0;
+                }
+
+            }
+            else
+            {
+                count += Time.deltaTime;
+                if (count > .1)
+                {
+                ScoreText.fontSize -= 3 / Mathf.Sqrt(StartTime);
+                    count = 0;
+                }
+            }
+
 
     }
 
