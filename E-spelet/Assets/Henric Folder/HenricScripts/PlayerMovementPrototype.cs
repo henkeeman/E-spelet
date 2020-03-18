@@ -41,8 +41,12 @@ public class PlayerMovementPrototype : MonoBehaviour
     float CheckRadius;
     //Ifall man är på marken eller inte
     public bool Grounded;
-    
-
+    [SerializeField]
+    float Deadzone;
+    [SerializeField]
+    float RotDeadzone;
+    [SerializeField]
+    float Smooth;
 
     private void Awake()
     {
@@ -67,6 +71,7 @@ public class PlayerMovementPrototype : MonoBehaviour
         GroundCheck();
         Move();
         Jump();
+        TurnThePlayer();
     }
 
     private void ReadInput()
@@ -130,7 +135,28 @@ public class PlayerMovementPrototype : MonoBehaviour
         }
 
     }
+    private void TurnThePlayer()
+    {
 
+        Vector2 input = MovementInput;
+        Vector2 stickInput = (input);
+        if (stickInput.magnitude < RotDeadzone)
+            stickInput = Vector2.zero;
+        float x = stickInput.x;
+        float y = stickInput.y;
+
+        Vector3 lookDirection = new Vector3(0, 0, -x);
+        var lookRot = Camera.main.transform.TransformDirection(lookDirection);
+        
+        if (lookRot!= Vector3.zero)
+        {
+            Quaternion newRotation = Quaternion.LookRotation(lookDirection);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, newRotation, Smooth * Time.deltaTime);
+
+        }
+
+
+    }
 
 
 

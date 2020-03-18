@@ -286,6 +286,9 @@ MonoBehaviour:
   GroundCheckTrans: {fileID: 53154064}
   CheckRadius: 0.25
   Grounded: 0
+  Deadzone: 0
+  RotDeadzone: 0
+  Smooth: 0
 --- !u!1 &653260035
 GameObject:
   m_ObjectHideFlags: 0
@@ -1517,6 +1520,9 @@ MonoBehaviour:
   GroundCheckTrans: {fileID: 1587779650}
   CheckRadius: 0.25
   Grounded: 0
+  Deadzone: 0.3
+  RotDeadzone: 0.3
+  Smooth: 600
 --- !u!54 &8296172667867013939
 Rigidbody:
   m_ObjectHideFlags: 0
