@@ -17,6 +17,11 @@ public class CameraSmootherScript : MonoBehaviour
 
     private void Start()
     {
+        for (int i = 0; i < targets.Count; i++)
+        {
+            if (targets[i].GetComponent<Transform>() == null)
+                targets.Remove(targets[i]);
+        }
         Cam = GetComponent<Camera>();
     }
 

@@ -28,14 +28,14 @@ public class TIleScript : MonoBehaviour
     {
         if (transform.position.y < -7)
             Destroy(gameObject);
-       // Gravity();
+        Gravity();
     }
 
     void Gravity()
     {
         transform.position -= new Vector3(0, (Mass * PullForse) * Time.deltaTime, 0);
 
-        //PullForse = PullForse * 1.1f; Kändes wierd
+       // PullForse = PullForse * 1.1f; //Kändes wierd
     }
 
 
