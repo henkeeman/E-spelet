@@ -47,7 +47,7 @@ public class SpawnTileScript : MonoBehaviour
             return new Vector3(100, -10, -100);
         }
 
-        float x = -transform.position.x + ((positionX - .5f) * scale.x * 1.1f);
+        float x = transform.position.x + ((positionX - .5f) * scale.x * 1.1f);
         return new Vector3(x, transform.position.y, 0);
     }
 
