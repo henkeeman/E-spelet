@@ -26,7 +26,7 @@ public class SpawnTileScript : MonoBehaviour
         whatRow = 0;
         scale = new Vector3(( 16.2f / AmountOfTiles),.5f,4);
       //  timer = StartTime;
-       // camWidth = Camera.main.orthographicSize * 2 * Camera.main.aspect;
+        camWidth = Camera.main.orthographicSize * 2.0f * Camera.main.aspect;
         WhatRowLookingFor = 0;
     }
 
@@ -47,7 +47,7 @@ public class SpawnTileScript : MonoBehaviour
             return new Vector3(100, -10, -100);
         }
 
-        float x = -transform.position.x + ((positionX - .5f) * scale.x * 1.1f);
+        float x = transform.position.x + ((positionX - .5f) * scale.x * 1.1f);
         return new Vector3(x, transform.position.y, 0);
     }
 
