@@ -7,6 +7,8 @@ public class PlayerMovementPrototype : MonoBehaviour
     // Start is called before the first frame update
 
    
+
+       
     //Spelarens Rigidbody
     Rigidbody RB;
     //InputActions
@@ -22,7 +24,9 @@ public class PlayerMovementPrototype : MonoBehaviour
     [SerializeField]
     bool Jumping;
     //The input saved for FixedUpdate
-
+    [SerializeField]
+    private float fJumpPressedRememberTime;
+    float JumpPressedRemember;
     Vector3 MovementForce;
 
     //Hastigheten på karaktärern
@@ -52,6 +56,23 @@ public class PlayerMovementPrototype : MonoBehaviour
     //animation Bools Sätter dom
     bool Walking;
 
+    [SerializeField]
+    float CutJumpHeight;
+    [SerializeField]
+    float fHorizontalAcceleration = 1;
+    [SerializeField]
+    [Range(0, 1)]
+    float fHorizontalDampingBasic = 0.5f;
+    [SerializeField]
+    [Range(0, 1)]
+    float fHorizontalDampingWhenStopping = 0.5f;
+    [SerializeField]
+    [Range(0, 1)]
+    float fHorizontalDampingWhenTurning = 0.5f;
+    [SerializeField]
+    float gravityScale = 8.0f;
+    [SerializeField]
+    static float globalGravity = -9.81f;
     private void Awake()
     {
         InputAction = new PlayerInput();
@@ -75,7 +96,6 @@ public class PlayerMovementPrototype : MonoBehaviour
     {
         GroundCheck();
         Move();
-        Jump();
         TurnThePlayer();
     }
 
@@ -91,18 +111,42 @@ public class PlayerMovementPrototype : MonoBehaviour
             Walking = true;
         }
         else Walking = false;
-        float hlerp = Mathf.Lerp(0, h, 1);
+        
 
 
         //float v = MovementInput.y;
-        if (Input.GetKeyDown(KeyCode.Space) && Grounded)
+        JumpPressedRemember -= Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            Jumping = true;
-            print("FUCK");
+            JumpPressedRemember = fJumpPressedRememberTime;
+        }
+        if (Input.GetButtonUp("Jump"))
+        {
+            if (RB.velocity.y > 0)
+            {
+                RB.velocity = new Vector2(RB.velocity.x, RB.velocity.y * CutJumpHeight);
+            }
         }
 
-        MovementForce = new Vector3(hlerp,0,0);
+        if (JumpPressedRemember > 0 && Grounded)
+        {
+            JumpPressedRemember = 0;
+            RB.velocity = new Vector2(RB.velocity.x, JumpForce);
+        }
+
+        
         AnimationValues();
+        float fHorizontalVelocity = RB.velocity.x;
+        fHorizontalVelocity += Input.GetAxisRaw("Horizontal");
+
+        if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) < 0.01f)
+            fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenStopping, Time.deltaTime * 10f);
+        else if (Mathf.Sign(Input.GetAxisRaw("Horizontal")) != Mathf.Sign(fHorizontalVelocity))
+            fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenTurning, Time.deltaTime * 10f);
+        else
+            fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingBasic, Time.deltaTime * 10f);
+
+        RB.velocity = new Vector2(fHorizontalVelocity, RB.velocity.y);
     }
     void GroundCheck()
     {
@@ -118,34 +162,18 @@ public class PlayerMovementPrototype : MonoBehaviour
     {
         
         var h = MovementInput.x;
-        
-        var velocity = RB.velocity;
-        var percent = velocity.magnitude / MaxSpeed;
-        if (velocity.magnitude >= MaxSpeed)
+
         {
-            
+            Vector3 gravity = globalGravity * gravityScale * Vector3.up;
+            RB.AddForce(gravity, ForceMode.Acceleration);
         }
-        MovementForce = new Vector3(h, 0, 0)*MvSpeed*(1+percent);
-        RB.AddForce(Vector3.down * Time.deltaTime * 100);
-        RB.AddForce(MovementForce*MvSpeed,ForceMode.Impulse);
-        if (velocity.magnitude>=MaxSpeed)
-        {
-            RB.velocity = Vector3.ClampMagnitude(RB.velocity, MaxSpeed);
-        }
-        //Rigidbody.AddForce(-MovementForce * MvSpeed / 2);
-        //Rigidbody.velocity = MovementForce;
+
+
+
+
 
     }
     
-    private void Jump()
-    {
-        if (Jumping == true)
-        {
-            RB.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
-            Jumping = false;
-        }
-
-    }
     private void TurnThePlayer()
     {
 
