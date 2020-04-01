@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class moveThrowTilesScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    bool transparent;
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (GetComponent<PlayerMovementPrototype>() == null)
+            return;
+
+        transparent = GetComponent<PlayerMovementPrototype>().Grounded;
+        if(!transparent)
+        {
+            gameObject.layer = 12;
+        }
+        else
+        {
+            gameObject.layer = 10;
+        }
     }
 }
