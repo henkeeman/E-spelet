@@ -41,7 +41,7 @@ public class CameraSmootherScript : MonoBehaviour
 
         Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, newZoomx, Time.deltaTime);
 
-        Debug.Log(getGreatestDisctance());
+       // Debug.Log(getGreatestDisctance());
     }
 
     float getGreatestDisctance()
@@ -67,7 +67,7 @@ public class CameraSmootherScript : MonoBehaviour
         Vector3 Centerpoint = centerPoint();
 
         Vector3 newpos = Centerpoint + offset;
-
+        print("newpos" + newpos);
         transform.position = Vector3.SmoothDamp(transform.position, newpos, ref velocity, SmoothTime/ZoomLimiter);
     }
 
