@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class CharacterPickerScript : MonoBehaviour
 {
     //lägg in timer
+    public float timer = 0;
     const int maxchars = 5;
     public int playerId;
     public GameObject[] spelare = new GameObject[maxchars];
@@ -24,7 +25,7 @@ public class CharacterPickerScript : MonoBehaviour
         {
             for (int i = 0; i < spelare.Length; i++)
             {
-                charicons[i] = Instantiate(spelare[i], new Vector3 (-2 + 1.3f*playerId, 0, 0), new Quaternion(0,3,0,0)); //fixa fucking rotationshelvetet jag vill dö
+                charicons[i] = Instantiate(spelare[i], new Vector3 (-2 + 1.3f*playerId, 0.6f, 0), Quaternion.Euler(0,-90,0)); //fixa fucking rotationshelvetet jag vill dö
                 charicons[i].SetActive(false);
             }
             
@@ -71,7 +72,18 @@ public class CharacterPickerScript : MonoBehaviour
                 charicons[i].SetActive(false);
             }
         }
-        GameData.Playerdatas[playerId].Character = characterId; //lägg den där du byter scen sen
+        timer -= Time.deltaTime;
+        Text timerText = GetComponentInChildren<Text>();
+        timerText.text = Mathf.Round(timer).ToString();
+        // fixa för fan
         //okejmenassådåva gör en lista som kopplar till spelarna som byter när man byter LOGIK ELLER HUR
+        if (timer <= 0)
+        {
+            GameData.Playerdatas[playerId].Character = characterId;
+            SceneManager.LoadScene("uwu"); //detta oxå
+            
+        }
+        
     }
+    
 }
