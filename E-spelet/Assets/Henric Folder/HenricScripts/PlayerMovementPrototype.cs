@@ -7,7 +7,6 @@ public class PlayerMovementPrototype : MonoBehaviour
     // Start is called before the first frame update
 
    
-
        
     //Spelarens Rigidbody
     Rigidbody RB;
@@ -15,7 +14,8 @@ public class PlayerMovementPrototype : MonoBehaviour
     PlayerInput InputAction;
     //LeftStickVectorMovement Vart man hämtar movement ifrån.
     Vector2 MovementInput;
-    
+    [SerializeField]
+    int PlayerId;
     //Movement speed
     public float MvSpeed;
     //JumpForce
@@ -102,10 +102,23 @@ public class PlayerMovementPrototype : MonoBehaviour
     private void ReadInput()
     {
        
-        float h = MovementInput.x;
+        //float h = MovementInput.x;
+        float h = 0;
+        if (Arcade.GetKey(PlayerId, ArcadeButton.Right))
+        {
+            h = 1;
+        }
+        
+        if (Arcade.GetKey(PlayerId, ArcadeButton.Left))
+        {
+            h = -1;
+        }
+        
+        
         
         if (Mathf.Abs(h) <= 0.2f)
             h = 0;
+
         if (Mathf.Abs(h) >= 0.2f)
         {
             Walking = true;
