@@ -14,8 +14,8 @@ public class PlayerMovementPrototype : MonoBehaviour
     PlayerInput InputAction;
     //LeftStickVectorMovement Vart man hämtar movement ifrån.
     Vector2 MovementInput;
-    [SerializeField]
-    int PlayerId;
+    
+    public int Id;
     //Movement speed
     public float MvSpeed;
     //JumpForce
@@ -32,6 +32,10 @@ public class PlayerMovementPrototype : MonoBehaviour
     //Hastigheten på karaktärern
     [SerializeField]
     float MaxSpeed;
+
+    //
+    [SerializeField]
+    int JumpCharges = 0;
 
     //Grounded check (Alla variabler ) 
     //Kollar vilka layers som räknas som mark
@@ -54,6 +58,7 @@ public class PlayerMovementPrototype : MonoBehaviour
     [SerializeField]
     Animator _animator;
     //animation Bools Sätter dom
+    [SerializeField]
     bool Walking;
 
     [SerializeField]
@@ -73,6 +78,9 @@ public class PlayerMovementPrototype : MonoBehaviour
     float gravityScale = 8.0f;
     [SerializeField]
     static float globalGravity = -9.81f;
+
+    [SerializeField]
+    float horizontalmovement;
     private void Awake()
     {
         InputAction = new PlayerInput();
@@ -82,6 +90,7 @@ public class PlayerMovementPrototype : MonoBehaviour
     {
         RB = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
+      
     }
 
     // Update is called once per frame
@@ -101,19 +110,26 @@ public class PlayerMovementPrototype : MonoBehaviour
 
     private void ReadInput()
     {
-       
+        if (Grounded == true)
+        {
+            JumpCharges = 2;
+        }
+        print("FAUCK");
         //float h = MovementInput.x;
         float h = 0;
-        if (Arcade.GetKey(PlayerId, ArcadeButton.Right))
+        if (Arcade.GetKeyDown(Id,ArcadeButton.Right))
         {
             h = 1;
+            print("REee");
         }
         
-        if (Arcade.GetKey(PlayerId, ArcadeButton.Left))
+        if (Arcade.GetKeyDown(Id, ArcadeButton.Left))
         {
             h = -1;
+            print("REee");
         }
-        
+        print(h);
+        horizontalmovement = h;
         
         
         if (Mathf.Abs(h) <= 0.2f)
@@ -132,6 +148,7 @@ public class PlayerMovementPrototype : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             JumpPressedRemember = fJumpPressedRememberTime;
+            JumpCharges -= 1;
         }
         if (Input.GetButtonUp("Jump"))
         {
@@ -141,8 +158,9 @@ public class PlayerMovementPrototype : MonoBehaviour
             }
         }
 
-        if (JumpPressedRemember > 0 && Grounded)
+        if (JumpPressedRemember > 0 && JumpCharges > 0)
         {
+            
             JumpPressedRemember = 0;
             RB.velocity = new Vector2(RB.velocity.x, JumpForce);
         }
@@ -152,9 +170,9 @@ public class PlayerMovementPrototype : MonoBehaviour
         float fHorizontalVelocity = RB.velocity.x;
         fHorizontalVelocity += Input.GetAxisRaw("Horizontal");
 
-        if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) < 0.01f)
+        if (Mathf.Abs(horizontalmovement) < 0.01f)
             fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenStopping, Time.deltaTime * 10f);
-        else if (Mathf.Sign(Input.GetAxisRaw("Horizontal")) != Mathf.Sign(fHorizontalVelocity))
+        else if (Mathf.Sign(horizontalmovement) != Mathf.Sign(fHorizontalVelocity))
             fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenTurning, Time.deltaTime * 10f);
         else
             fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingBasic, Time.deltaTime * 10f);
