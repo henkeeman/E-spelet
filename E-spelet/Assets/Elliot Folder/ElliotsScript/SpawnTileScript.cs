@@ -8,6 +8,7 @@ public class SpawnTileScript : MonoBehaviour
    
     Vector3 Startpos;
     float camWidth;
+    public int konstansMaxDistance = 2;
   //  float timer; // in sec
 
   //  public float StartTime;
@@ -18,6 +19,8 @@ public class SpawnTileScript : MonoBehaviour
 
     static int whatRow;
     public static int WhatRowLookingFor;
+    int oldArrayPos;
+    int oldR;
 
     Vector3 scale;
     // Start is called before the first frame update
@@ -33,10 +36,16 @@ public class SpawnTileScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        posOfScrpit();
         if(alphaSpawner())
         {
             SpawnTileBetter(AmountOfTiles);
         }
+    }
+
+    void posOfScrpit()
+    {
+        transform.position = new Vector3(-9, Camera.main.transform.position.y + 11, 0);
     }
 
     Vector3 posOfTile(int positionX)
@@ -51,7 +60,7 @@ public class SpawnTileScript : MonoBehaviour
         return new Vector3(x, transform.position.y, 0);
     }
 
-    void SpawnTileBetter(int amountOfTiles)
+    /*void SpawnTileBetter(int amountOfTiles)
     {
         amountOfTiles += 1;
         int R = UnityEngine.Random.Range(1, amountOfTiles);
@@ -74,6 +83,58 @@ public class SpawnTileScript : MonoBehaviour
             g.name = whatRow + ":" + i;
             g.transform.localScale = scale;
         }
+
+    }*/
+    void SpawnTileBetter(int amountOfTiles)
+    {
+        amountOfTiles += 1;
+      
+        int R = UnityEngine.Random.Range(1, amountOfTiles);
+       
+
+        whatRow++;
+
+      
+        int[] arrayPos = new int[amountOfTiles];
+
+        for (int i = 0; i < R; i++)
+        {
+            arrayPos[i] = UnityEngine.Random.Range(1, amountOfTiles);
+         
+            for (int j = 0; j < i; j++)
+            {
+                if(oldR == 1)
+                {
+                    if(oldArrayPos + konstansMaxDistance < amountOfTiles && oldArrayPos - konstansMaxDistance > 0)
+                    {
+                        arrayPos[i] = UnityEngine.Random.Range(oldArrayPos - konstansMaxDistance, oldArrayPos + konstansMaxDistance);
+                    }
+                    else if(oldArrayPos + konstansMaxDistance < amountOfTiles && oldArrayPos - konstansMaxDistance < 0)
+                    {
+                        arrayPos[i] = UnityEngine.Random.Range(1, oldArrayPos + konstansMaxDistance);
+                    }
+                    else
+                    {
+                        arrayPos[i] = UnityEngine.Random.Range(oldArrayPos - konstansMaxDistance, amountOfTiles);
+                    }
+                    oldR = 2;
+                }
+                else
+                {
+                    if (arrayPos[i] == arrayPos[j])
+                    {
+                        arrayPos[i] = -1;
+                    }
+                }
+             
+            }
+
+            GameObject g = Instantiate(Tile, posOfTile(arrayPos[i]), Quaternion.identity);
+            g.name = whatRow + ":" + i;
+            g.transform.localScale = scale;
+        }
+
+        oldR = R;
 
     }
 

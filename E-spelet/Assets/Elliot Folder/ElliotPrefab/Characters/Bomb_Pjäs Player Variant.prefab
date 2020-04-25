@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5125329555443043023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781751182597786296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d4198ad475954847b1f80c092473c29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeathEffeckt: {fileID: 7866256470484314673, guid: 55beec027c91c854d9e0102970786a23,
+    type: 3}
 --- !u!114 &-1376370041910230262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,6 +26,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6360e36ab6efb41a52eccaede098a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &81034438214298120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781751182597786296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ff19afe2d9804a439e117fcef736553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartTime: 15
+  ScoreText: {fileID: 5005849454575288493}
+  Endgame: 0
+  AddedTimeOnCollitionWithClock: 30
+  SubstractedTimeOnCollitionWithLava: 30
 --- !u!1001 &5005849454571861888
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23,6 +54,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: "Bomb_Pj\xE4s Player Variant"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5737883899626601787, guid: 90d9abcb4b5fbe1418dd983af183a0c8,
+        type: 3}
+      propertyPath: playerLayerMask.m_Bits
+      value: 2560
+      objectReference: {fileID: 0}
+    - target: {fileID: 5737883899626601787, guid: 90d9abcb4b5fbe1418dd983af183a0c8,
+        type: 3}
+      propertyPath: MvSpeed
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8789433114389368619, guid: 90d9abcb4b5fbe1418dd983af183a0c8,
         type: 3}
@@ -78,6 +119,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8789433114389368619, guid: 90d9abcb4b5fbe1418dd983af183a0c8,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8789433114389368619, guid: 90d9abcb4b5fbe1418dd983af183a0c8,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8789433114389368619, guid: 90d9abcb4b5fbe1418dd983af183a0c8,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90d9abcb4b5fbe1418dd983af183a0c8, type: 3}
@@ -182,3 +238,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 842a42726b0f21e42a748f91e1eda933, type: 3}
+--- !u!114 &5005849454575288493 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1633511326, guid: 842a42726b0f21e42a748f91e1eda933,
+    type: 3}
+  m_PrefabInstance: {fileID: 5005849456174065459}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -30,6 +30,7 @@ public class TIleScript : MonoBehaviour
             Destroy(gameObject);
         Gravity();
     }
+   
 
     void Gravity()
     {
@@ -51,12 +52,12 @@ public class TIleScript : MonoBehaviour
         else
         {
             if (SpawnTileScript.WhatRowLookingFor < DividerMaxLimit)
-                OddsOfSpawnigClock += (1 / Mathf.Sqrt(SpawnTileScript.WhatRowLookingFor) * Time.deltaTime);
+                OddsOfSpawnigClock += SpawnValue * (1 / Mathf.Sqrt(SpawnTileScript.WhatRowLookingFor) * Time.deltaTime);
             else
-                OddsOfSpawnigClock += (1 / Time.deltaTime * Mathf.Sqrt(DividerMaxLimit));
+                OddsOfSpawnigClock +=  (1 / Time.deltaTime * Mathf.Sqrt(DividerMaxLimit));
         }
 
-        //print("odds of spawning clocks: " + OddsOfSpawnigClock);
+        print("odds of spawning clocks: " + OddsOfSpawnigClock);
 
     }
 }

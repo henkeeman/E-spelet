@@ -49,6 +49,7 @@ public class PlayerClockSript : MonoBehaviour
         {
             printMin();
         }
+
     }
 
     void printMin()
