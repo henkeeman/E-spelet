@@ -19,7 +19,7 @@ public class SpawnPlayerOnStartScript : MonoBehaviour
     }
   void error()
     {
-        PlayerList.Add(Instantiate(PlayerObj[0], new Vector3(transform.position.x, transform.position.y - 3, transform.position.z + 10), Quaternion.identity));
+        PlayerList.Add(Instantiate(PlayerObj[0], new Vector3(transform.position.x, transform.position.y - 2, transform.position.z + 10), Quaternion.identity));
     }
     Vector3 startPos(int possition)
     {

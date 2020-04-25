@@ -11,6 +11,7 @@ public class PlayerClockSript : MonoBehaviour
     public bool Endgame;//när alla spelare e död
     public float AddedTimeOnCollitionWithClock;
     public float SubstractedTimeOnCollitionWithLava;
+    public float LavaForce = 2;
     bool grow;//so the time can change it's size
     float count;//a timer for the growth change
     // Start is called before the first frame update
@@ -33,6 +34,7 @@ public class PlayerClockSript : MonoBehaviour
         if(other.tag == "Lava")
         {
             StartTime -= AddedTimeOnCollitionWithClock;
+            GetComponent<Rigidbody>().AddForce(Vector3.up * LavaForce,ForceMode.Impulse);
         }
     }
    

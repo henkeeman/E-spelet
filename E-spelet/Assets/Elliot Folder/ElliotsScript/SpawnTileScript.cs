@@ -129,8 +129,8 @@ public class SpawnTileScript : MonoBehaviour
                         arrayPos[i] = UnityEngine.Random.Range(oldArrayPos[i] - konstansMaxDistance+1, oldArrayPos[i] + konstansMaxDistance-1);
                     }
 
-                    if (arrayPos[i] == oldArrayPos[i])
-                        return;
+                  //  if (arrayPos[i] == oldArrayPos[i])
+                    //    return;
                     oldR ++;
                 }
                     
