@@ -51,13 +51,14 @@ public class TIleScript : MonoBehaviour
         }
         else
         {
-            if (SpawnTileScript.WhatRowLookingFor < DividerMaxLimit)
-                OddsOfSpawnigClock += SpawnValue * (1 / Mathf.Sqrt(SpawnTileScript.WhatRowLookingFor) * Time.deltaTime);
+           /* if (SpawnTileScript.WhatRowLookingFor < DividerMaxLimit)
+                OddsOfSpawnigClock += SpawnValue  (1 / Mathf.Sqrt(SpawnTileScript.WhatRowLookingFor) * Time.deltaTime;
             else
-                OddsOfSpawnigClock +=  (1 / Time.deltaTime * Mathf.Sqrt(DividerMaxLimit));
+                OddsOfSpawnigClock +=  (1 / Time.deltaTime * Mathf.Sqrt(DividerMaxLimit));*/
+            OddsOfSpawnigClock += (1 / Mathf.Sqrt(SpawnTileScript.WhatRowLookingFor)) + Time.deltaTime;
         }
 
-        print("odds of spawning clocks: " + OddsOfSpawnigClock);
+        print("odds of spawning clocks: " + OddsOfSpawnigClock /SpawnValue);
 
     }
 }
