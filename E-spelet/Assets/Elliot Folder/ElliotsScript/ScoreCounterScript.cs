@@ -11,7 +11,7 @@ public class ScoreCounterScript : MonoBehaviour
     float temp;
     int n; // n = number
 
-    public float Sec;// so the player can change amount of seconds
+    static public float Sec;// so the player can change amount of seconds
     public TextMeshProUGUI ScoreText;//visulice the time on the screen
     // Start is called before the first frame update
     void Start()

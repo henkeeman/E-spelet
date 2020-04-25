@@ -31,13 +31,23 @@ public class PlayerClockSript : MonoBehaviour
             StartTime += AddedTimeOnCollitionWithClock;
             Destroy(other.gameObject);
         }
+        /*
         if(other.tag == "Lava")
         {
-            StartTime -= AddedTimeOnCollitionWithClock;
+            StartTime -= SubstractedTimeOnCollitionWithLava;
             GetComponent<Rigidbody>().AddForce(Vector3.up * LavaForce,ForceMode.Impulse);
+        }*/
+
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Lava")
+        {
+            StartTime -= SubstractedTimeOnCollitionWithLava;
+            GetComponent<Rigidbody>().AddForce(Vector3.up * LavaForce, ForceMode.Impulse);
         }
     }
-   
+
 
     // Update is called once per frame
     void Update()
@@ -51,8 +61,8 @@ public class PlayerClockSript : MonoBehaviour
         {
             printMin();
         }
-
     }
+
 
     void printMin()
     {

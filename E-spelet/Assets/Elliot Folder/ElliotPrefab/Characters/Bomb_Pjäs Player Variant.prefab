@@ -44,6 +44,18 @@ MonoBehaviour:
   AddedTimeOnCollitionWithClock: 30
   SubstractedTimeOnCollitionWithLava: 30
   LavaForce: 50
+--- !u!114 &2298534506151213331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5702650073464541606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab48e98f46e00c9478dce757d87d8fdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5005849454571861888
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -239,6 +251,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 842a42726b0f21e42a748f91e1eda933, type: 3}
+--- !u!1 &5702650073464541606 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 746396363723634325, guid: 842a42726b0f21e42a748f91e1eda933,
+    type: 3}
+  m_PrefabInstance: {fileID: 5005849456174065459}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5005849454575288493 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1633511326, guid: 842a42726b0f21e42a748f91e1eda933,

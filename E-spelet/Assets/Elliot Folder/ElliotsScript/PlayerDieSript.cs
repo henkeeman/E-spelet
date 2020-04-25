@@ -11,7 +11,7 @@ public class PlayerDieSript : MonoBehaviour
         if(GetComponent<PlayerClockSript>().Endgame)
         {
             Instantiate(DeathEffeckt, transform.position, Quaternion.identity);
-
+            Arcade.SetScore(GetComponent<PlayerMovementPrototype>().Id, Mathf.RoundToInt(ScoreCounterScript.Sec));
             Destroy(this.gameObject);
         }
     }
