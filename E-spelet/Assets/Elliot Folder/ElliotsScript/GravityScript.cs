@@ -11,15 +11,15 @@ public class GravityScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.y < -7)
+        if (transform.position.y < -20)
             Destroy(gameObject);
          Gravity();
     }
 
     void Gravity()
     {
-        transform.position -= new Vector3(0, (Mass * PullForse) * Time.deltaTime, 0);
-
-        //PullForse = PullForse * 1.1f; Kändes wierd
+        transform.position -= new Vector3(0, ((Mass * PullForse) * Time.deltaTime), 0);
+        print(transform.position.y);
+        PullForse = Mathf.Lerp(1,4,transform.position.y/100);// Kändes wierd
     }
 }

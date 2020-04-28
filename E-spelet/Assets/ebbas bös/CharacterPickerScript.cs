@@ -40,7 +40,7 @@ public class CharacterPickerScript : MonoBehaviour
             GameData.Playerdatas[playerId].Character++;
             Text charText = GetComponentInChildren<Text>(); //byt till gameobj
             charText.text = GameData.Playerdatas[playerId].Character.ToString();
-
+            print("FAAAAAAAAAAAAAAANNNNNNNNNNNNN");
             characterId++;
             if(characterId >= maxchars)
             {

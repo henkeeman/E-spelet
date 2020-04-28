@@ -7,7 +7,6 @@ public class PlayerMovementPrototype : MonoBehaviour
     // Start is called before the first frame update
 
    
-
        
     //Spelarens Rigidbody
     Rigidbody RB;
@@ -16,6 +15,7 @@ public class PlayerMovementPrototype : MonoBehaviour
     //LeftStickVectorMovement Vart man hämtar movement ifrån.
     Vector2 MovementInput;
     
+    public int Id;
     //Movement speed
     public float MvSpeed;
     //JumpForce
@@ -32,6 +32,10 @@ public class PlayerMovementPrototype : MonoBehaviour
     //Hastigheten på karaktärern
     [SerializeField]
     float MaxSpeed;
+
+    //
+    [SerializeField]
+    int JumpCharges = 0;
 
     //Grounded check (Alla variabler ) 
     //Kollar vilka layers som räknas som mark
@@ -54,6 +58,7 @@ public class PlayerMovementPrototype : MonoBehaviour
     [SerializeField]
     Animator _animator;
     //animation Bools Sätter dom
+    [SerializeField]
     bool Walking;
 
     [SerializeField]
@@ -73,6 +78,9 @@ public class PlayerMovementPrototype : MonoBehaviour
     float gravityScale = 8.0f;
     [SerializeField]
     static float globalGravity = -9.81f;
+
+    [SerializeField]
+    float horizontalmovement;
     private void Awake()
     {
         InputAction = new PlayerInput();
@@ -82,6 +90,7 @@ public class PlayerMovementPrototype : MonoBehaviour
     {
         RB = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
+      
     }
 
     // Update is called once per frame
@@ -101,11 +110,32 @@ public class PlayerMovementPrototype : MonoBehaviour
 
     private void ReadInput()
     {
-       
-        float h = MovementInput.x;
+        print(MovementInput);
+        if (Grounded == true)
+        {
+            JumpCharges = 2;
+        }
+        print("FAUCK");
+        //float h = MovementInput.x;
+        float h = 0;
+        if (Arcade.GetKey(Id,ArcadeButton.Right))
+        {
+            h = 1;
+            print("REee");
+        }
+        
+        if (Arcade.GetKey(Id, ArcadeButton.Left))
+        {
+            h = -1;
+            print("REee");
+        }
+        print(h);
+        horizontalmovement = h;
+        
         
         if (Mathf.Abs(h) <= 0.2f)
             h = 0;
+
         if (Mathf.Abs(h) >= 0.2f)
         {
             Walking = true;
@@ -116,11 +146,12 @@ public class PlayerMovementPrototype : MonoBehaviour
 
         //float v = MovementInput.y;
         JumpPressedRemember -= Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Arcade.GetKeyDown(Id, ArcadeButton.Green))
         {
             JumpPressedRemember = fJumpPressedRememberTime;
+            JumpCharges -= 1;
         }
-        if (Input.GetButtonUp("Jump"))
+        if (Arcade.GetKeyUp(Id, ArcadeButton.Green))
         {
             if (RB.velocity.y > 0)
             {
@@ -128,8 +159,9 @@ public class PlayerMovementPrototype : MonoBehaviour
             }
         }
 
-        if (JumpPressedRemember > 0 && Grounded)
+        if (JumpPressedRemember > 0 && JumpCharges > 0)
         {
+            
             JumpPressedRemember = 0;
             RB.velocity = new Vector2(RB.velocity.x, JumpForce);
         }
@@ -137,11 +169,11 @@ public class PlayerMovementPrototype : MonoBehaviour
         
         AnimationValues();
         float fHorizontalVelocity = RB.velocity.x;
-        fHorizontalVelocity += Input.GetAxisRaw("Horizontal");
+        fHorizontalVelocity += h;
 
-        if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) < 0.01f)
+        if (Mathf.Abs(horizontalmovement) < 0.01f)
             fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenStopping, Time.deltaTime * 10f);
-        else if (Mathf.Sign(Input.GetAxisRaw("Horizontal")) != Mathf.Sign(fHorizontalVelocity))
+        else if (Mathf.Sign(horizontalmovement) != Mathf.Sign(fHorizontalVelocity))
             fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenTurning, Time.deltaTime * 10f);
         else
             fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingBasic, Time.deltaTime * 10f);
@@ -176,13 +208,17 @@ public class PlayerMovementPrototype : MonoBehaviour
     
     private void TurnThePlayer()
     {
-
+        print(horizontalmovement);
         Vector2 input = MovementInput;
         Vector2 stickInput = (input);
-        if (stickInput.magnitude < RotDeadzone)
-            stickInput = Vector2.zero;
-        float x = stickInput.x;
-        float y = stickInput.y;
+        Vector2 NewInput;
+        NewInput = new Vector2(horizontalmovement, 0);
+        Vector2 NewStickInput = NewInput;
+
+        if (NewStickInput.magnitude < RotDeadzone)
+            NewStickInput = Vector2.zero;
+        float x = NewStickInput.x;
+        float y = NewStickInput.y;
 
         Vector3 lookDirection = new Vector3(0, 0, -x);
         var lookRot = Camera.main.transform.TransformDirection(lookDirection);

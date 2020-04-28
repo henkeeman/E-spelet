@@ -11,6 +11,7 @@ public class PlayerClockSript : MonoBehaviour
     public bool Endgame;//när alla spelare e död
     public float AddedTimeOnCollitionWithClock;
     public float SubstractedTimeOnCollitionWithLava;
+    public float LavaForce = 2;
     bool grow;//so the time can change it's size
     float count;//a timer for the growth change
     // Start is called before the first frame update
@@ -30,12 +31,23 @@ public class PlayerClockSript : MonoBehaviour
             StartTime += AddedTimeOnCollitionWithClock;
             Destroy(other.gameObject);
         }
+        /*
         if(other.tag == "Lava")
         {
-            StartTime -= AddedTimeOnCollitionWithClock;
+            StartTime -= SubstractedTimeOnCollitionWithLava;
+            GetComponent<Rigidbody>().AddForce(Vector3.up * LavaForce,ForceMode.Impulse);
+        }*/
+
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Lava")
+        {
+            StartTime -= SubstractedTimeOnCollitionWithLava;
+            GetComponent<Rigidbody>().AddForce(Vector3.up * LavaForce, ForceMode.Impulse);
         }
     }
-   
+
 
     // Update is called once per frame
     void Update()
@@ -50,6 +62,7 @@ public class PlayerClockSript : MonoBehaviour
             printMin();
         }
     }
+
 
     void printMin()
     {
