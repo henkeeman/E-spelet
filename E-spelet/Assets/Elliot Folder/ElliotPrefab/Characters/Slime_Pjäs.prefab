@@ -5451,6 +5451,7 @@ MonoBehaviour:
   Endgame: 0
   AddedTimeOnCollitionWithClock: 20
   SubstractedTimeOnCollitionWithLava: 20
+  LavaForce: 2
 --- !u!114 &9010323918863456746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5477,12 +5478,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf26eab114f861d4ab9c8b7107020ea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerId: 0
+  Id: 2
   MvSpeed: 1
   JumpForce: 28
   Jumping: 0
   fJumpPressedRememberTime: 0.2
   MaxSpeed: 20
+  JumpCharges: 0
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 2560
@@ -5493,12 +5495,14 @@ MonoBehaviour:
   RotDeadzone: 0.3
   Smooth: 600
   _animator: {fileID: 0}
+  Walking: 0
   CutJumpHeight: 0.5
   fHorizontalAcceleration: 2
   fHorizontalDampingBasic: 0.408
   fHorizontalDampingWhenStopping: 0.6
   fHorizontalDampingWhenTurning: 0.2
   gravityScale: 8
+  horizontalmovement: 0
 --- !u!1001 &8929299592200229529
 PrefabInstance:
   m_ObjectHideFlags: 0
