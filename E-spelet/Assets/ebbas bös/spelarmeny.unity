@@ -363,7 +363,7 @@ PrefabInstance:
     - target: {fileID: 7268950801267717616, guid: 0593e7ca83b35cf40abdf8ee1366a265,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 664
+      value: 698
       objectReference: {fileID: 0}
     - target: {fileID: 7268950801267717616, guid: 0593e7ca83b35cf40abdf8ee1366a265,
         type: 3}
@@ -396,7 +396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d11b4c23d8df944ca1bc4f518cb1f95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 10
+  timer: 20
   playerId: 0
   spelare:
   - {fileID: 1103474172}
@@ -1020,7 +1020,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d11b4c23d8df944ca1bc4f518cb1f95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 10
+  timer: 20
   playerId: 2
   spelare:
   - {fileID: 1103474172}
@@ -2059,7 +2059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d11b4c23d8df944ca1bc4f518cb1f95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 10
+  timer: 20
   playerId: 3
   spelare:
   - {fileID: 1103474172}
@@ -2085,7 +2085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d11b4c23d8df944ca1bc4f518cb1f95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 10
+  timer: 20
   playerId: 1
   spelare:
   - {fileID: 1103474172}

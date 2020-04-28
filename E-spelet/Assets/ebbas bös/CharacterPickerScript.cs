@@ -80,7 +80,7 @@ public class CharacterPickerScript : MonoBehaviour
         if (timer <= 0)
         {
             GameData.Playerdatas[playerId].Character = characterId;
-            SceneManager.LoadScene("uwu"); //detta oxå
+            SceneManager.LoadScene("E-Spel"); //detta oxå
             
         }
         

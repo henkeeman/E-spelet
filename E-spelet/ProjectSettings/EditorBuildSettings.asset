@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: "Assets/ebbas b\xF6s/spelarmeny.unity"
     guid: 1ec6833c7f360bd42b99ee6def96a381
   - enabled: 1
-    path: "Assets/ebbas b\xF6s/uwu.unity"
-    guid: 2def062ed889a2847a6d3625b8355d42
+    path: Assets/KlarFolder/E-Spel.unity
+    guid: e440a6b60d68ba543bac892c149b1000
   m_configObjects: {}
