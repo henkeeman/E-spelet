@@ -13,6 +13,7 @@ public class CameraSmootherScript : MonoBehaviour
     public float ZoomLimiter = 1;
 
     int old;
+    bool first;
     Camera Cam;
     Vector3 velocity;
 
@@ -23,7 +24,7 @@ public class CameraSmootherScript : MonoBehaviour
              if (targets[i].GetComponent<Transform>().== false)
                  targets.Remove(targets[i]);
          }*/
-      
+        first = false;
         Cam = GetComponent<Camera>();
     }
 
@@ -32,6 +33,9 @@ public class CameraSmootherScript : MonoBehaviour
     {
         add();
         remove();
+
+        if (targets.Count == 0)
+            return;
         movment();
         Zoom();
     }
@@ -39,7 +43,7 @@ public class CameraSmootherScript : MonoBehaviour
     void add()
     {
         
-        if(targets.Count == 0)
+        if(targets.Count == 0 && !first)
         {
             int temp = GetComponent<SpawnPlayerOnStartScript>().PlayerList.Count;
             for (int i = 0; i < temp; i++)
@@ -69,7 +73,7 @@ public class CameraSmootherScript : MonoBehaviour
          float newZoomx = Mathf.Lerp(MinZoom, MaxZoom, getGreatestDisctance().y/ ZoomLimiter);
 
         Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, newZoomx, Time.deltaTime);
-
+        first = true;
        // Debug.Log(getGreatestDisctance());
     }
 

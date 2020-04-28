@@ -12,7 +12,7 @@ public class PlayerDieSript : MonoBehaviour
         {
             Instantiate(DeathEffeckt, transform.position, Quaternion.identity);
             Arcade.SetScore(GetComponent<PlayerMovementPrototype>().Id, Mathf.RoundToInt(ScoreCounterScript.Sec));
-            Destroy(this.gameObject);
+            Destroy(this.gameObject,.5f);
         }
     }
 }
