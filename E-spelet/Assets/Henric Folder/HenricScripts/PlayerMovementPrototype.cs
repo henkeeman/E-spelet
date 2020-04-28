@@ -110,6 +110,7 @@ public class PlayerMovementPrototype : MonoBehaviour
 
     private void ReadInput()
     {
+        print(MovementInput);
         if (Grounded == true)
         {
             JumpCharges = 2;
@@ -117,13 +118,13 @@ public class PlayerMovementPrototype : MonoBehaviour
         print("FAUCK");
         //float h = MovementInput.x;
         float h = 0;
-        if (Arcade.GetKeyDown(Id,ArcadeButton.Right))
+        if (Arcade.GetKey(Id,ArcadeButton.Right))
         {
             h = 1;
             print("REee");
         }
         
-        if (Arcade.GetKeyDown(Id, ArcadeButton.Left))
+        if (Arcade.GetKey(Id, ArcadeButton.Left))
         {
             h = -1;
             print("REee");
@@ -145,12 +146,12 @@ public class PlayerMovementPrototype : MonoBehaviour
 
         //float v = MovementInput.y;
         JumpPressedRemember -= Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Arcade.GetKeyDown(Id, ArcadeButton.Green))
         {
             JumpPressedRemember = fJumpPressedRememberTime;
             JumpCharges -= 1;
         }
-        if (Input.GetButtonUp("Jump"))
+        if (Arcade.GetKeyUp(Id, ArcadeButton.Green))
         {
             if (RB.velocity.y > 0)
             {
@@ -168,7 +169,7 @@ public class PlayerMovementPrototype : MonoBehaviour
         
         AnimationValues();
         float fHorizontalVelocity = RB.velocity.x;
-        fHorizontalVelocity += Input.GetAxisRaw("Horizontal");
+        fHorizontalVelocity += h;
 
         if (Mathf.Abs(horizontalmovement) < 0.01f)
             fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenStopping, Time.deltaTime * 10f);
@@ -207,13 +208,17 @@ public class PlayerMovementPrototype : MonoBehaviour
     
     private void TurnThePlayer()
     {
-
+        print(horizontalmovement);
         Vector2 input = MovementInput;
         Vector2 stickInput = (input);
-        if (stickInput.magnitude < RotDeadzone)
-            stickInput = Vector2.zero;
-        float x = stickInput.x;
-        float y = stickInput.y;
+        Vector2 NewInput;
+        NewInput = new Vector2(horizontalmovement, 0);
+        Vector2 NewStickInput = NewInput;
+
+        if (NewStickInput.magnitude < RotDeadzone)
+            NewStickInput = Vector2.zero;
+        float x = NewStickInput.x;
+        float y = NewStickInput.y;
 
         Vector3 lookDirection = new Vector3(0, 0, -x);
         var lookRot = Camera.main.transform.TransformDirection(lookDirection);
