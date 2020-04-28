@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Whenmusicisplayed : MonoBehaviour
 {
+
+    public AudioSource taunt;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +16,8 @@ public class Whenmusicisplayed : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            taunt.Play();
+        };
     }
 }

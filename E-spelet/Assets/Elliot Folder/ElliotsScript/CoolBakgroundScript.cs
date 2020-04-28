@@ -16,7 +16,7 @@ public class CoolBakgroundScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        child1 = transform.FindChild("Layer1").GetComponent<SpriteRenderer>();
+        child1 = transform.Find("Layer1").GetComponent<SpriteRenderer>();
 
         mainCamera = Camera.main;
 
