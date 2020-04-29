@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Media;
+using System.Security.Cryptography;
 using UnityEngine;
 
 
@@ -11,7 +12,12 @@ public class Noplayersscript : MonoBehaviour
 
     float time = 0;
     public float StartTime = 2;
+    static public int Score = 0;
 
+    //void Awake()
+    //{
+    //    DontDestroyOnLoad(transform.gameObject);
+    //}
 
     void LateUpdate()
     {
@@ -30,7 +36,9 @@ public class Noplayersscript : MonoBehaviour
         }
         else
         {
+            
             time += Time.deltaTime;
+
         }
     }
 }
