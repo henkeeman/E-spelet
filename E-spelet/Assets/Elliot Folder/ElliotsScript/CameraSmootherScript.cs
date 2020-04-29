@@ -98,6 +98,8 @@ public class CameraSmootherScript : MonoBehaviour
     */
     Vector3 getGreatestDisctance()
     {
+        if (targets.Count == 0)
+            return Vector3.zero;
         if(targets.Count == 1)
         {
             return targets[0].position;
@@ -138,7 +140,8 @@ public class CameraSmootherScript : MonoBehaviour
     {
         if (targets.Count == 0)
             return Vector3.zero;
-        if(targets.Count == 1)
+
+        else if(targets.Count == 1)
         {
             return targets[0].position;
         }
