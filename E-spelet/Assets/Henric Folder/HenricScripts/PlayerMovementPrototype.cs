@@ -6,8 +6,8 @@ public class PlayerMovementPrototype : MonoBehaviour
 {
     // Start is called before the first frame update
 
-   
-       
+    public AudioSource jumpmusic;
+
     //Spelarens Rigidbody
     Rigidbody RB;
     //InputActions
@@ -150,6 +150,7 @@ public class PlayerMovementPrototype : MonoBehaviour
         {
             JumpPressedRemember = fJumpPressedRememberTime;
             JumpCharges -= 1;
+            jumpmusic.Play();
         }
         if (Arcade.GetKeyUp(Id, ArcadeButton.Green))
         {
