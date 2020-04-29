@@ -192,44 +192,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-8089061929309890083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 781751182597786296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf26eab114f861d4ab9c8b7107020ea9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpmusic: {fileID: 0}
-  Id: 0
-  MvSpeed: 0
-  JumpForce: 0
-  Jumping: 0
-  fJumpPressedRememberTime: 0
-  MaxSpeed: 0
-  JumpCharges: 0
-  playerLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  GroundCheckTrans: {fileID: 0}
-  CheckRadius: 0
-  Grounded: 0
-  Deadzone: 0
-  RotDeadzone: 0
-  Smooth: 0
-  _animator: {fileID: 0}
-  Walking: 0
-  CutJumpHeight: 0
-  fHorizontalAcceleration: 1
-  fHorizontalDampingBasic: 0.5
-  fHorizontalDampingWhenStopping: 0.5
-  fHorizontalDampingWhenTurning: 0.5
-  gravityScale: 8
-  horizontalmovement: 0
 --- !u!114 &-5125329555443043023
 MonoBehaviour:
   m_ObjectHideFlags: 0
