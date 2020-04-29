@@ -31,9 +31,9 @@ public class CameraSmootherScript : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        add();
         remove();
-
+        add();
+        
         if (targets.Count == 0)
             return;
         movment();
@@ -77,6 +77,7 @@ public class CameraSmootherScript : MonoBehaviour
        // Debug.Log(getGreatestDisctance());
     }
 
+    /*
     Vector3 topTarget()
     {
         int top = 0;
@@ -94,7 +95,7 @@ public class CameraSmootherScript : MonoBehaviour
 
         return targets[top].transform.position;
     }
-
+    */
     Vector3 getGreatestDisctance()
     {
         if(targets.Count == 1)
@@ -105,6 +106,9 @@ public class CameraSmootherScript : MonoBehaviour
         var bounds = new Bounds(targets[0].position, Vector3.zero);
         for (int i = 0; i < targets.Count; i++)
         {
+            if (targets[i] == null)
+                targets.Remove(targets[i]);
+            else
             bounds.Encapsulate(targets[i].position);
         }
 

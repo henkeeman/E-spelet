@@ -5348,6 +5348,7 @@ GameObject:
   - component: {fileID: 8406561315843324487}
   - component: {fileID: 9181898533287762675}
   - component: {fileID: 9181898533287762676}
+  - component: {fileID: 6216390450624980702}
   m_Layer: 0
   m_Name: "Witch_Pj\xE4s"
   m_TagString: Untagged
@@ -5363,7 +5364,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9181898533287762679}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 4.7, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 886440598992265604}
@@ -5451,6 +5452,7 @@ MonoBehaviour:
   Endgame: 0
   AddedTimeOnCollitionWithClock: 20
   SubstractedTimeOnCollitionWithLava: 20
+  LavaForce: 2
 --- !u!114 &9181898533287762675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5477,28 +5479,128 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf26eab114f861d4ab9c8b7107020ea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerId: 0
+  jumpmusic: {fileID: 6216390450624980702}
+  Id: 0
   MvSpeed: 1
   JumpForce: 28
   Jumping: 0
   fJumpPressedRememberTime: 0.2
   MaxSpeed: 20
+  JumpCharges: 0
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 2560
-  GroundCheckTrans: {fileID: 0}
+  GroundCheckTrans: {fileID: 886440598992265604}
   CheckRadius: 0.25
   Grounded: 0
   Deadzone: 0.3
   RotDeadzone: 0.3
   Smooth: 600
   _animator: {fileID: 0}
+  Walking: 0
   CutJumpHeight: 0.5
   fHorizontalAcceleration: 2
   fHorizontalDampingBasic: 0.408
   fHorizontalDampingWhenStopping: 0.6
   fHorizontalDampingWhenTurning: 0.2
   gravityScale: 8
+  horizontalmovement: 0
+--- !u!82 &6216390450624980702
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9181898533287762679}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 267bc0b28451c1b4da86703c90f15488, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &2361691095120176874
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5561,10 +5663,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 735be2af254ded045a6f2015c6e94d36,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 735be2af254ded045a6f2015c6e94d36,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 735be2af254ded045a6f2015c6e94d36,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 735be2af254ded045a6f2015c6e94d36,
         type: 3}
       propertyPath: m_Name
       value: "Witch_Pj\xE4s"
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 735be2af254ded045a6f2015c6e94d36,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 735be2af254ded045a6f2015c6e94d36, type: 3}

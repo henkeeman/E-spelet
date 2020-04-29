@@ -6,12 +6,11 @@ public class SpawnPlayerOnStartScript : MonoBehaviour
 {
     public List<GameObject> PlayerList = new List<GameObject>();
     public List<GameObject> PlayerObj = new List<GameObject>();
-    int j;
+   // int j;
     Vector3 tempPos;
     // Start is called before the first frame update
     void Start()
     {
-        j = 0;
         if (GameData.Playerdatas == null || GameData.Playerdatas.Length == 0)
             error();
         else
@@ -23,7 +22,7 @@ public class SpawnPlayerOnStartScript : MonoBehaviour
     }
     Vector3 startPos(int possition)
     {
-            tempPos = new Vector3(transform.position.x + (4 - possition * 2), transform.position.y - 2, transform.position.z + 10);
+        tempPos = new Vector3(-8 + (possition * 3), - 2, transform.position.z + 10);
         return tempPos;
     }
 
@@ -32,13 +31,20 @@ public class SpawnPlayerOnStartScript : MonoBehaviour
        
         for (int i = 0; i < 4; i++)
         {
-            if(i == GameData.Playerdatas[j].Character)
+            if(Arcade.PlayerIsIngame(i))
             {
-                print(GameData.Playerdatas[j].Character);
-                PlayerList.Add(Instantiate(PlayerObj[i], startPos(j), Quaternion.identity));
-                j++;
+                for (int j = 0; j < 5; j++)
+                {
+                    if (j == GameData.Playerdatas[i].Character)
+                    {
+                        print("player caracternumber:" + j);
+                        PlayerList.Add(Instantiate(PlayerObj[i], startPos(i), Quaternion.identity));
+                        PlayerList[PlayerList.Count - 1].GetComponent<PlayerMovementPrototype>().Id = i;
+                      //  j++;
+                    }
+                }
+              
             }
-               
         }
     }
 

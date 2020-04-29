@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -394,7 +394,7 @@ PrefabInstance:
     - target: {fileID: 6717814424306188359, guid: fb7ba3478fd293043865d7278905da79,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6717814424306188359, guid: fb7ba3478fd293043865d7278905da79,
         type: 3}
@@ -595,7 +595,7 @@ Transform:
   m_LocalScale: {x: 1.0001501, y: 1.0214634, z: 0.97519773}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: -2.115, y: 0, z: 189.99998}
 --- !u!1001 &778611559
 PrefabInstance:
@@ -807,6 +807,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2080114988245276453, guid: 44abe6e6c7d95f04a9fab2329d8a5fc9,
+        type: 3}
+      propertyPath: PlayerObj.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2080114988245276453, guid: 44abe6e6c7d95f04a9fab2329d8a5fc9,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2080114988245276453, guid: 44abe6e6c7d95f04a9fab2329d8a5fc9,
+        type: 3}
+      propertyPath: PlayerObj.Array.data[4]
+      value: 
+      objectReference: {fileID: 9181898533287762679, guid: ac8f1963badb0584da308869b94b0d74,
+        type: 3}
     - target: {fileID: 2080114988245276461, guid: 44abe6e6c7d95f04a9fab2329d8a5fc9,
         type: 3}
       propertyPath: m_Name
