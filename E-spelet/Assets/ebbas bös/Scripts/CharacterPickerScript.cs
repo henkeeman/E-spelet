@@ -13,6 +13,7 @@ public class CharacterPickerScript : MonoBehaviour
     public GameObject[] spelare = new GameObject[maxchars];
     GameObject[] charicons = new GameObject[maxchars];
     int characterId = 0;
+    public AudioSource start;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +47,7 @@ public class CharacterPickerScript : MonoBehaviour
             {
                 characterId = 0;
             }
+            start.Play();
 
         }
         if (Arcade.GetKeyDown(playerId, ArcadeButton.Left))
@@ -59,7 +61,7 @@ public class CharacterPickerScript : MonoBehaviour
             {
                 characterId = 0;
             }
-
+            
         }
         for (int i = 0; i < charicons.Length; i++)
         {
