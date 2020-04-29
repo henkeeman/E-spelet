@@ -1,21 +1,89 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.IO;
+﻿// Arcade.cs
+// Version 1.01
+// 2020-03-10
+// Author Simon Grönberg
+// LBS Kreativa Gymnasiet
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
 /// <summary>
 /// An enumeration of all buttons for each player in the arcade
 /// </summary>
 public enum ArcadeButton
 {
-    Left = 0,
-    Right = 1,
-    Up = 2,
-    Down = 3,
-    Red = 4,
-    Green = 5,
-    Blue = 6,
+    Left = 0, 
+    Right = 1, 
+    Up = 2, 
+    Down = 3, 
+    Red = 4, 
+    Green = 5, 
+    Blue = 6, 
     Yellow = 7
+}
+
+public class AxisState
+{
+    bool IsDown = false;
+    bool WasReleased = false;
+    bool WasPressed = false;
+    int Sign = 0;
+    DateTime PressedTime = DateTime.Now;
+    DateTime ReleasedTime = DateTime.Now;
+    string AxisName;
+
+    public AxisState(string axisName, bool positive)
+    {
+        if (positive)
+            Sign = 1;
+        else
+            Sign = -1;
+        AxisName = axisName;
+    }
+    void UpdateAxis()
+    {
+        if (Input.GetAxis(AxisName) * Sign > 0 && (!IsDown || DateTime.Now > PressedTime + TimeSpan.FromSeconds(0.5)))
+        {
+            IsDown = true;
+            PressedTime = DateTime.Now;
+            WasPressed = true;
+        }
+        if (Input.GetAxis(AxisName) * Sign <= 0 && IsDown)
+        {
+            IsDown = false;
+            WasReleased = true;
+            ReleasedTime = DateTime.Now;
+        }
+
+    }
+    public bool GetAxisDown()
+    {
+        UpdateAxis();
+        if (WasPressed && DateTime.Now < PressedTime + TimeSpan.FromSeconds(0.2))
+        {
+            WasPressed = false;
+            return true;
+        }
+        return false;
+           
+    }
+    public bool GetAxisUp()
+    {
+        UpdateAxis();
+        if (WasReleased && DateTime.Now < ReleasedTime + TimeSpan.FromSeconds(0.2))
+        {
+            WasReleased = false;
+            return true;
+        }
+        return false;
+    }
+    public bool GetAxis()
+    {
+        UpdateAxis();
+        return (Input.GetAxis(AxisName) * Sign > 0);
+    }
 }
 /// <summary>
 /// Contains button mapping and score for one player
@@ -24,8 +92,60 @@ public enum ArcadeButton
 public class ArcadePlayer
 {
     KeyCode[] buttons = new KeyCode[8];
+    int PlayerId;
+    string[] joyButtons = new string[8];
+    AxisState[] axes = new AxisState[4];
+    bool UsingJoystick = false;
+    bool LeftDown;
+    bool RightDown;
+    bool UpDown;
+    bool DownDown;
+
     bool ingame = false;
     int score = 0;
+
+    /// <summary>
+    /// Constructor for the ArcadePlayer which sets up the button mapping to a keyboard and joysticks
+    /// </summary>
+    /// <param name="playerId"></param>
+    /// <param name="leftButton"></param>
+    /// <param name="rightButton"></param>
+    /// <param name="upButton"></param>
+    /// <param name="downButton"></param>
+    /// <param name="redButton"></param>
+    /// <param name="greenButton"></param>
+    /// <param name="blueButton"></param>
+    /// <param name="yellowButton"></param>
+    public ArcadePlayer(int playerId, KeyCode leftButton, KeyCode rightButton, KeyCode upButton, KeyCode downButton, KeyCode redButton, KeyCode greenButton, KeyCode blueButton, KeyCode yellowButton, bool usingJoystick = false)
+    {
+        buttons[0] = leftButton;
+        buttons[1] = rightButton;
+        buttons[2] = upButton;
+        buttons[3] = downButton;
+        buttons[4] = redButton;
+        buttons[5] = greenButton;
+        buttons[6] = blueButton;
+        buttons[7] = yellowButton;
+        PlayerId = playerId;
+        UsingJoystick = true;
+        string prefix = "Joy" + (playerId+1).ToString() + "_";
+        joyButtons[0] = prefix + "X";
+        joyButtons[1] = prefix + "X";
+        joyButtons[2] = prefix + "Y";
+        joyButtons[3] = prefix + "Y";
+        joyButtons[4] = prefix + "0";
+        joyButtons[5] = prefix + "1";
+        joyButtons[6] = prefix + "2";
+        joyButtons[7] = prefix + "3";
+
+        axes[0] = new AxisState(prefix + "X", false);
+        axes[1] = new AxisState(prefix + "X", true);
+        axes[2] = new AxisState(prefix + "Y", false);
+        axes[3] = new AxisState(prefix + "Y", true);
+    }
+
+
+
     /// <summary>
     /// Add this player to the game
     /// </summary>
@@ -42,13 +162,52 @@ public class ArcadePlayer
         return ingame;
     }
     /// <summary>
+    /// Check if a corresponding joystick-button or axis has been pressed
+    /// </summary>
+    /// <param name="button">the ArcadeButton to check</param>
+    /// <returns>true if the button has been pressed</returns>
+    private bool GetJoyButtonDown(ArcadeButton button)
+    {
+        if ((int)button > 3)
+        {   
+            return Input.GetButtonDown(joyButtons[(int)button]);
+        }
+        else
+        {
+            return axes[(int)button].GetAxisDown();
+        }
+    }
+    /// <summary>
     /// Check if an ArcadeButton has been pressed since last frame
     /// </summary>
     /// <param name="button">The ArcadeButton to check</param>
     /// <returns>true if the button has been pressed</returns>
     public bool GetKeyDown(ArcadeButton button)
     {
+        if (UsingJoystick)
+        {
+            if (GetJoyButtonDown(button))
+            {
+                return true;
+            }
+        }
         return Input.GetKeyDown(buttons[(int)button]);
+    }
+    /// <summary>
+    /// Check if a corresponding joystick-button or axis has been released
+    /// </summary>
+    /// <param name="button">the ArcadeButton to check</param>
+    /// <returns>true if the button has been released</returns>
+    private bool GetJoyButtonUp(ArcadeButton button)
+    {
+        if ((int)button > 3)
+        {
+            return Input.GetButtonUp(joyButtons[(int)button]);
+        }
+        else
+        {
+            return axes[(int)button].GetAxisUp();
+        }
     }
     /// <summary>
     /// Check if an ArcadeButton has been released since last frame
@@ -57,7 +216,30 @@ public class ArcadePlayer
     /// <returns>true if the button has been released</returns>
     public bool GetKeyUp(ArcadeButton button)
     {
+        if (UsingJoystick)
+        {
+            if (GetJoyButtonUp(button))
+            {
+                return true;
+            }
+        }
         return Input.GetKeyUp(buttons[(int)button]);
+    }
+    /// <summary>
+    /// Check if a corresponding joystick-button or axis is being hold down
+    /// </summary>
+    /// <param name="button">the ArcadeButton to check</param>
+    /// <returns>true if the button is being hold down</returns>
+    private bool GetJoyButton(ArcadeButton button)
+    {
+        if ((int)button > 3)
+        {
+            return Input.GetButton(joyButtons[(int)button]);
+        }
+        else
+        {
+            return axes[(int)button].GetAxis();
+        }
     }
     /// <summary>
     /// Check if an ArcadeButton is being hold down
@@ -66,6 +248,13 @@ public class ArcadePlayer
     /// <returns>true if the button is being hold down</returns>
     public bool GetKey(ArcadeButton button)
     {
+        if (UsingJoystick)
+        {
+            if (GetJoyButton(button))
+            {
+                return true;
+            }
+        }
         return Input.GetKey(buttons[(int)button]);
     }
     /// <summary>
@@ -104,28 +293,7 @@ public class ArcadePlayer
         if (score < 0)
             score = 0;
     }
-    /// <summary>
-    /// Constructor for the ArcadePlayer which sets up the button mapping
-    /// </summary>
-    /// <param name="leftButton"></param>
-    /// <param name="rightButton"></param>
-    /// <param name="upButton"></param>
-    /// <param name="downButton"></param>
-    /// <param name="redButton"></param>
-    /// <param name="greenButton"></param>
-    /// <param name="blueButton"></param>
-    /// <param name="yellowButton"></param>
-    public ArcadePlayer(KeyCode leftButton, KeyCode rightButton, KeyCode upButton, KeyCode downButton, KeyCode redButton, KeyCode greenButton, KeyCode blueButton, KeyCode yellowButton)
-    {
-        buttons[0] = leftButton;
-        buttons[1] = rightButton;
-        buttons[2] = upButton;
-        buttons[3] = downButton;
-        buttons[4] = redButton;
-        buttons[5] = greenButton;
-        buttons[6] = blueButton;
-        buttons[7] = yellowButton;
-    }
+
 }
 /// <summary>
 /// A wrapper class to work with the Arcade's controls and menu system
@@ -133,16 +301,25 @@ public class ArcadePlayer
 public static class Arcade
 {
     static ArcadePlayer[] player = new ArcadePlayer[4];
+    static StaticDestructor Dtor = new StaticDestructor();
     const string filePath = "arcade.txt";
+
+    private sealed class StaticDestructor
+    {
+        ~StaticDestructor()
+        {
+            //Arcade.Save();
+        }
+    }
     /// <summary>
     /// Constructor that sets up the control mapping for all players
     /// </summary>
     static Arcade()
     {
-        player[0] = new ArcadePlayer(KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.Return, KeyCode.RightShift, KeyCode.RightControl, KeyCode.Backspace);
-        player[1] = new ArcadePlayer(KeyCode.A, KeyCode.D, KeyCode.W, KeyCode.S, KeyCode.Q, KeyCode.E, KeyCode.Z, KeyCode.X);
-        player[2] = new ArcadePlayer(KeyCode.F, KeyCode.H, KeyCode.T, KeyCode.G, KeyCode.R, KeyCode.Y, KeyCode.V, KeyCode.B);
-        player[3] = new ArcadePlayer(KeyCode.J, KeyCode.L, KeyCode.I, KeyCode.K, KeyCode.U, KeyCode.O, KeyCode.M, KeyCode.N);
+        player[0] = new ArcadePlayer(0, KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.Return, KeyCode.RightShift, KeyCode.RightControl, KeyCode.Backspace, true);
+        player[1] = new ArcadePlayer(1, KeyCode.A, KeyCode.D, KeyCode.W, KeyCode.S, KeyCode.Q, KeyCode.E, KeyCode.Z, KeyCode.X, true);
+        player[2] = new ArcadePlayer(2, KeyCode.F, KeyCode.H, KeyCode.T, KeyCode.G, KeyCode.R, KeyCode.Y, KeyCode.V, KeyCode.B, true);
+        player[3] = new ArcadePlayer(3, KeyCode.J, KeyCode.L, KeyCode.I, KeyCode.K, KeyCode.U, KeyCode.O, KeyCode.M, KeyCode.N, true);
         Load();
     }
     /// <summary>
@@ -170,7 +347,7 @@ public static class Arcade
     public static void Save()
     {
         StreamWriter sw = new StreamWriter(filePath);
-        for (int i = 0; i < 4; i++)
+        for (int i=0; i<4; i++)
         {
             sw.WriteLine(player[i].GetScore().ToString());
         }
@@ -188,7 +365,7 @@ public static class Arcade
             return true;
         }
         return false;
-
+            
     }
     /// <summary>
     /// Check if an ArcadeButton for a certain player has been pressed since last frame
@@ -205,9 +382,9 @@ public static class Arcade
         }
         else
         {
-            throw new System.ArgumentException("Arcade: PlayerId out of bounds");
+            throw new System.ArgumentException("Arcade.GetKeyDown: PlayerId out of bounds");
         }
-
+        
     }
     /// <summary>
     /// Check if an ArcadeButton for a certain player has been released since last frame
@@ -224,9 +401,9 @@ public static class Arcade
         }
         else
         {
-            throw new System.ArgumentException("Arcade: PlayerId out of bounds");
+            throw new System.ArgumentException("Arcade.GetKeyUp: PlayerId out of bounds");
         }
-
+        
     }
     /// <summary>
     /// Check if an ArcadeButton for a certain player is being hold down
@@ -243,9 +420,9 @@ public static class Arcade
         }
         else
         {
-            throw new System.ArgumentException("Arcade: PlayerId out of bounds");
+            throw new System.ArgumentException("Arcade.GetKey: PlayerId out of bounds");
         }
-
+        
     }
     /// <summary>
     /// Checks whether the player is currently in the game
@@ -260,9 +437,9 @@ public static class Arcade
         }
         else
         {
-            throw new System.ArgumentException("Arcade: PlayerId out of bounds");
+            throw new System.ArgumentException("Arcade.PlayerIsIngame: PlayerId out of bounds");
         }
-
+        
     }
     /// <summary>
     /// Gets the current score of a player
@@ -277,9 +454,9 @@ public static class Arcade
         }
         else
         {
-            throw new System.ArgumentException("Arcade: PlayerId out of bounds");
+            throw new System.ArgumentException("Arcade.GetScore: PlayerId out of bounds");
         }
-
+        
     }
     /// <summary>
     /// Sets the score of a player to a fixed number
@@ -294,9 +471,9 @@ public static class Arcade
         }
         else
         {
-            throw new System.ArgumentException("Arcade: PlayerId out of bounds");
+            throw new System.ArgumentException("Arcade.SetScore: PlayerId out of bounds");
         }
-
+        
     }
     /// <summary>
     /// Increases the score of a player by a certain number
@@ -311,7 +488,7 @@ public static class Arcade
         }
         else
         {
-            throw new System.ArgumentException("Arcade: PlayerId out of bounds");
+            throw new System.ArgumentException("Arcade.AddScore: PlayerId out of bounds");
         }
     }
 
@@ -328,11 +505,10 @@ public static class Arcade
         }
         else
         {
-            throw new System.ArgumentException("Arcade: PlayerId out of bounds");
+            throw new System.ArgumentException("Arcade.SubtractScore: PlayerId out of bounds");
         }
-
+        
     }
 
 
 }
-
