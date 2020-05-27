@@ -348,7 +348,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_FontData.m_Font
       value: 
-      objectReference: {fileID: 12800000, guid: 9f856ec81a476e6428c122b758d6a9f9,
+      objectReference: {fileID: 12800000, guid: 2799b36002313fb47a162f506e3ec465,
         type: 3}
     - target: {fileID: 4320786373499186864, guid: 0593e7ca83b35cf40abdf8ee1366a265,
         type: 3}

@@ -61,7 +61,7 @@ public class CharacterPickerScript : MonoBehaviour
             {
                 characterId = 0;
             }
-            
+            start.Play();
         }
         for (int i = 0; i < charicons.Length; i++)
         {
